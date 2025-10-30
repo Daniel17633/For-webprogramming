@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="zametki.css" />
+  <title>Заметки</title>
+</head>
+<body>
+  <div class="outer-block">
+    <div class="left-block">
+      <h1>Мои заметки</h1>
+      <a href="/notes/new" class="newmark"><b>Новая заметка</b></a>
+      <div class="tegs">Теги</div>
+      <ul class="tags-list">
+        <li><a href="/?tag=Все">Все</a></li>
+        <li><a href="/?tag=Идеи">Идеи</a></li>
+        <li><a href="/?tag=Личное">Личное</a></li>
+        <li><a href="/?tag=Работа">Работа</a></li>
+        <li><a href="/?tag=Список покупок">Список покупок</a></li>
+      </ul>
+    </div>
+
+    <div class="right-block">
+      <div class="search-block">
+        <form action="/" method="GET">
+          <input type="text" name="search" class="search" placeholder="Поиск" value="{{search}}" />
+          <input type="hidden" name="tag" value="{{tag}}" />
+        </form>
+      </div>
+      <div class="notes-list">
+        {{notes}}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,377 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+  height: 100vh;
+}
+.outer-block {
+  width: 1000px;
+  height: 90vh;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+}
+.left-block {
+  text-align: center;
+  width: 370px;
+  height: 90vh;
+  background-color: #F0F0F0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-top: 16px;
+  padding-left: 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-size: 18px;
+  position: relative;
+}
+.newmark {
+  background-color: #4499FF;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 16px 72px 16px 72px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+.tegs {
+  font-size: 24px;
+  color: #74777B;
+  position: absolute;
+  padding-left: 30px;
+  padding-top: 50px;
+}
+.tags-list {
+  padding-left: 50px;
+  margin-top: 100px;
+  color: black;
+  font-size: 21px;
+  list-style: none;
+  text-align: left;
+  text-decoration: none;
+}
+.tags-list a {
+  color: black;
+  text-decoration: none;
+}
+li {
+  padding: 15px;
+}
+.search {
+  width: 500px;
+  height: 40px;
+  color: #FCFCFC;
+  padding-left: 10px;
+  border-radius: 10px;
+  background-color: #F4F4F4;
+  border: none;
+  margin: 36px 0px 0px 36px;
+}
+input::placeholder {
+  color: #74777B;
+}
+input, select, textarea {
+  color: black;
+}
+textarea:focus, input:focus {
+  color: black;
+}
+.buttonsearch {
+  color: blue;
+  height: 40px;
+  width: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4499FF;
+  background-image: url(https://img.icons8.com/?size=100&id=7695&format=png&color=FFFFFF);
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 12px;
+}
+.buttonsearch:hover {
+  cursor: pointer;
+}
+.search-block {
+  display: flex;
+  align-items: center;
+  margin: 0px 0 0 30px;
+}
+.notes-list {
+  width: 565px;
+  margin: 24px 0 0 36px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 14px;
+  box-sizing: border-box;
+  max-height: calc(90vh - 132px); /* Добавлено для скролла */
+  overflow-y: auto; /* Добавлено для скролла */
+}
+.note {
+  position: relative;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.note:last-child {
+  margin-bottom: 0;
+}
+.note-title {
+  font-weight: 600;
+  font-size: 24px;
+  color: #333;
+}
+.note-date, .note-section {
+  font-size: 18px;
+  color: #666;
+  margin-top: 8px;
+}
+.note:hover {
+  background-color: #4499FF;
+  cursor: pointer;
+}
+.note:hover .note-title {
+  color: #FFFFFF;
+}
+.note:hover .note-date {
+  color: #E0E0E0;
+}
+.note:hover .note-section {
+  color: black;
+  background-color: white;
+}
+.note-section {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #F0F0F0;
+  color: black;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+/* Обновленная кнопка удаления: меньше, серый в статике, красный при наведении */
+.delete-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 20px;
+  background: #ccc;
+  color: #333;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+.delete-btn:hover {
+  background: linear-gradient(45deg, #ff4d4d, #ff6666);
+  color: white;
+  box-shadow: 0 4px 8px rgba(255, 77, 77, 0.5);
+  transform: translateY(-1px);
+}
+.delete-btn:before {
+  content: '🗑️ ';
+}
+/* Стили для детального вида редактирования */
+.note-detail {
+  width: 100%;
+  height: 100%;
+  padding: 36px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.detail-title {
+  margin: 0;
+  flex: 1;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+.detail-date, .detail-section {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.detail-section {
+  background-color: #F0F0F0;
+  color: black;
+}
+.detail-content {
+  width: 100%;
+  min-height: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.detail-buttons {
+  text-align: right;
+  margin-top: 20px;
+  width: 100%;
+}
+.detail-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.back-btn, .cancel-detail-btn {
+  background-color: #ccc;
+  color: #333;
+}
+.save-detail-btn {
+  background-color: #4499FF;
+  color: #fff;
+}
+
+/* Стили для страницы создания заметки */
+.create-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #eaeaea; /* Фон как на главной странице */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.create-form {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 500px; /* Ограниченная ширина для мобильной адаптивности */
+  box-sizing: border-box;
+}
+
+.create-title {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-field {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.form-field:focus {
+  border-color: #4499FF; /* Синий акцент */
+  box-shadow: 0 0 8px rgba(68, 153, 255, 0.3);
+  outline: none;
+  background-color: #ffffff;
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  flex: 1;
+}
+
+.btn-primary {
+  background-color: #4499FF; /* Синий как на главной */
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #357ae8;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #bbb;
+  transform: translateY(-2px);
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+  .create-form {
+    padding: 20px;
+    max-width: 100%;
+  }
+  .create-title {
+    font-size: 24px;
+  }
+  .form-buttons {
+    flex-direction: column;
+  }
+}
