@@ -1,24 +1,24 @@
-const http = require('http');
-const url = require('url');
-const fs = require('fs');
-const path = require('path');
-const querystring = require('querystring');
+const http = require('http'); // для сервака
+const url = require('url'); // для парсинга url
+const fs = require('fs'); // чтобы файлы работали
+const path = require('path'); // пути файлов
+const querystring = require('querystring'); // парсинг данных из форм
 
 // Файл для хранения заметок
 const NOTES_FILE = path.join(__dirname, 'notes.json');
 
 // Загрузка заметок из файла
-function loadNotes() {
+function loadNotes() { // проверка существования файла(без нее ломался)
   if (fs.existsSync(NOTES_FILE)) {
     const data = fs.readFileSync(NOTES_FILE, 'utf8');
     return JSON.parse(data);
   }
-  return [{ id: 1, title: 'Первая заметка', content: '', date: '2024-06-01', section: 'Идеи' }];
+  return [{ id: 1, title: 'Первая заметка', content: '', date: '2024-06-01', section: 'Идеи' }]; // дефолт
 }
 
 // Сохранение заметок в файл
 function saveNotes(notes) {
-  fs.writeFileSync(NOTES_FILE, JSON.stringify(notes, null, 2));
+  fs.writeFileSync(NOTES_FILE, JSON.stringify(notes, null, 2)); // отступы добавить
 }
 
 // Инициализация заметок
@@ -38,29 +38,29 @@ function renderNote(note) {
         <input type="hidden" name="_method" value="DELETE" />
         <button type="submit" class="delete-btn"></button>
       </form>
-    </div>
+    </div> // возвращаем вид заметки из html + редакт и удаление
   `;
-}
+} 
 
 // Функция для рендера списка заметок с фильтром и поиском
 function renderNotesList(notes, tag, search) {
-  const filtered = notes.filter(note => {
-    const matchesTag = !tag || tag === 'Все' || note.section === tag;
+  const filtered = notes.filter(note => { 
+    const matchesTag = !tag || tag === 'Все' || note.section === tag; // совпадение по тегу
     const matchesSearch = !search || note.title.toLowerCase().includes(search.toLowerCase()) || note.content.toLowerCase().includes(search.toLowerCase());
-    return matchesTag && matchesSearch;
+    return matchesTag && matchesSearch; // поиск + тег = вывод на экран
   });
-  return filtered.map(renderNote).join('');
+  return filtered.map(renderNote).join(''); // для рендера попавших в диапазон
 }
 
 // Функция для рендера главной страницы
 function renderIndex(query) {
-  const tag = query.tag || 'Все';
-  const search = query.search || '';
+  const tag = query.tag || 'Все'; 
+  const search = query.search || ''; // получил тег + поиск
   const notesHtml = renderNotesList(notes, tag, search);
   let html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   html = html.replace('{{notes}}', notesHtml);
   html = html.replace('{{tag}}', tag);
-  html = html.replace('{{search}}', search);
+  html = html.replace('{{search}}', search); // заменяем плейсхолдеры на текущие по поиску и фильрам, берем из html как шаблон
   return html;
 }
 
@@ -105,7 +105,7 @@ function renderCreateForm() {
       </div>
     </body>
     </html>
-  `;
+  `; // ctrl + v грубо говоря // ошибку пофиксил в css // css испрвить
 }
 
 // Функция для рендера формы редактирования
@@ -138,7 +138,7 @@ function renderEditForm(note) {
                 <option value="Идеи" ${note.section === 'Идеи' ? 'selected' : ''}>Идеи</option>
                 <option value="Личное" ${note.section === 'Личное' ? 'selected' : ''}>Личное</option>
                 <option value="Работа" ${note.section === 'Работа' ? 'selected' : ''}>Работа</option>
-                <option value="Список покупок" ${note.section === 'Список покупок' ? 'selected' : ''}>Список покупок</option>
+                <option value="Список покупок" ${note.section === 'Список покупок' ? 'selected' : ''}>Список покупок</option> // должны выбрать
               </select>
             </div>
             <div class="form-buttons">
@@ -150,21 +150,21 @@ function renderEditForm(note) {
       </div>
     </body>
     </html>
-  `;
+  `; // ctrl + v + добавить выборку, ее рендер, как в создании +-
 }
 
 // Основной обработчик запросов
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
-  const query = parsedUrl.query;
-  const method = req.method;
+  const parsedUrl = url.parse(req.url, true); // модуль парсинга url
+  const pathname = parsedUrl.pathname; // получение пути
+  const query = parsedUrl.query; // получение параметров из библеотеки
+  const method = req.method; // http
 
   if (method === 'GET') {
     if (pathname === '/' || pathname === '/index.html') {
       res.writeHead(200, {'Content-Type': 'text/html'});
-      res.end(renderIndex(query));
-    } else if (pathname === '/zametki.css') {
+      res.end(renderIndex(query)); // отпоавка рендера - доработать
+    } else if (pathname === '/zametki.css') { //css 
       fs.readFile(path.join(__dirname, 'zametki.css'), (err, data) => {
         if (err) {
           res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -174,15 +174,15 @@ const server = http.createServer((req, res) => {
           res.end(data);
         }
       });
-    } else if (pathname === '/notes/new') {
+    } else if (pathname === '/notes/new') { // создание новой
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(renderCreateForm());
-    } else if (pathname.startsWith('/notes/') && pathname.endsWith('/edit')) {
-      const id = parseInt(pathname.split('/')[2]);
-      const note = notes.find(n => n.id === id);
+    } else if (pathname.startsWith('/notes/') && pathname.endsWith('/edit')) { // редакт
+      const id = parseInt(pathname.split('/')[2]); // изменил id
+      const note = notes.find(n => n.id === id); // а это поиск по id
       if (note) {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(renderEditForm(note));
+        res.end(renderEditForm(note)); // отправить форму
       } else {
         res.writeHead(404, {'Content-Type': 'text/plain'});
         res.end('Note not found');
@@ -194,36 +194,36 @@ const server = http.createServer((req, res) => {
   } else if (method === 'POST') {
     let body = '';
     req.on('data', chunk => {
-      body += chunk;
+      body += chunk; // сбор данных запроса
     });
     req.on('end', () => {
       const data = querystring.parse(body);
-      if (pathname === '/notes') {
+      if (pathname === '/notes') { // создание
         // Создание
         const newNote = {
-          id: notes.length ? Math.max(...notes.map(n => n.id)) + 1 : 1,
+          id: notes.length ? Math.max(...notes.map(n => n.id)) + 1 : 1, // для id - доработка
           title: data.title,
           content: data.content,
           section: data.section,
           date: new Date().toISOString().split('T')[0]
         };
-        notes.push(newNote);
-        saveNotes(notes);
-        res.writeHead(302, { 'Location': '/' });
+        notes.push(newNote); // +заметка в массив
+        saveNotes(notes); // сохранил в файл
+        res.writeHead(302, { 'Location': '/' }); // редирект на всякий случай
         res.end();
       } else if (pathname.startsWith('/notes/')) {
-        const id = parseInt(pathname.split('/')[2]);
-        const idx = notes.findIndex(n => n.id === id);
+        const id = parseInt(pathname.split('/')[2]); // id извлекло
+        const idx = notes.findIndex(n => n.id === id); // индекс 
         if (idx >= 0) {
           if (data._method === 'PUT') {
             // Обновление
-            notes[idx] = { ...notes[idx], title: data.title, content: data.content, section: data.section };
+            notes[idx] = { ...notes[idx], title: data.title, content: data.content, section: data.section }; // обновление полей
             saveNotes(notes);
             res.writeHead(302, { 'Location': '/' });
             res.end();
           } else if (data._method === 'DELETE') {
             // Удаление
-            notes.splice(idx, 1);
+            notes.splice(idx, 1); // удалил из массива
             saveNotes(notes);
             res.writeHead(302, { 'Location': '/' });
             res.end();
@@ -246,6 +246,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(2200, () => {
-  console.log('Server running at http://localhost:2200/');
-});
+server.listen(2200, () => { // назначил хост
+  console.log('Server running at http://localhost:2200/'); // host
+  
+}); // работает + можно подчистить код, если модуль использовать(потом изучить)
