@@ -165,7 +165,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(renderIndex(query)); // отпоавка рендера - доработать
     } else if (pathname === '/zametki.css') { //css 
-      fs.readFile(path.join(__dirname, 'zametki.css'), (err, data) => {
+      fs.readFile(path.join(__dirname, 'zametki.css'), (err, data) => { // ассинхронно, чтоб не мешал другим процессам ноды(пока ищет сss)
         if (err) {
           res.writeHead(500, {'Content-Type': 'text/plain'});
           res.end('Internal Server Error');
@@ -175,8 +175,8 @@ const server = http.createServer((req, res) => {
         }
       });
     } else if (pathname === '/notes/new') { // создание новой
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.end(renderCreateForm());
+      res.writeHead(200, {'Content-Type': 'text/html'}); // заголовок ответов
+      res.end(renderCreateForm()); 
     } else if (pathname.startsWith('/notes/') && pathname.endsWith('/edit')) { // редакт
       const id = parseInt(pathname.split('/')[2]); // изменил id
       const note = notes.find(n => n.id === id); // а это поиск по id
@@ -219,7 +219,7 @@ const server = http.createServer((req, res) => {
             // Обновление
             notes[idx] = { ...notes[idx], title: data.title, content: data.content, section: data.section }; // обновление полей
             saveNotes(notes);
-            res.writeHead(302, { 'Location': '/' });
+            res.writeHead(302, { 'Location': '/' }); // ctrl + v
             res.end();
           } else if (data._method === 'DELETE') {
             // Удаление
@@ -250,3 +250,4 @@ server.listen(2200, () => { // назначил хост
   console.log('Server running at http://localhost:2200/'); // host
   
 }); // работает + можно подчистить код, если модуль использовать(потом изучить)
+
