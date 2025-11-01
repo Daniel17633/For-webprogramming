@@ -4,35 +4,144 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="zametki.css" />
+  <link rel="stylesheet" href="Zametka.css" />
   <title>Заметки</title>
+  <style>
+    /* Дополнительные стили для исправления правой части */
+    .right-block {
+      flex: 1;
+      box-sizing: border-box;
+      position: relative;
+      height: 100%;
+    }
+    .note-detail {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 36px;
+      background-color: #f9f9f9;
+      overflow-y: auto;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+    .note-detail > div {
+      width: 100%;
+    }
+    .detail-title {
+      margin: 0;
+      flex: 1;
+      font-size: 24px;
+      color: #333;
+      font-weight: 600;
+    }
+    .detail-date, .detail-section {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .detail-section {
+      background-color: #F0F0F0;
+      color: black;
+    }
+    .detail-content {
+      width: 100%;
+      min-height: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-family: inherit;
+      resize: vertical;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .detail-buttons {
+      text-align: right;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .detail-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    .back-btn, .cancel-detail-btn {
+      background-color: #ccc;
+      color: #333;
+    }
+    .save-detail-btn {
+      background-color: #4499FF;
+      color: #fff;
+    }
+    .delete-detail-btn {
+      background-color: #ff4444;
+      color: #fff;
+    }
+    .search-block, .notes-list {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
   <div class="outer-block">
     <div class="left-block">
       <h1>Мои заметки</h1>
-      <a href="/notes/new" class="newmark"><b>Новая заметка</b></a>
+      <button class="newmark"><b>Новая заметка</b></button>
       <div class="tegs">Теги</div>
       <ul class="tags-list">
-        <li><a href="/?tag=Все">Все</a></li>
-        <li><a href="/?tag=Идеи">Идеи</a></li>
-        <li><a href="/?tag=Личное">Личное</a></li>
-        <li><a href="/?tag=Работа">Работа</a></li>
-        <li><a href="/?tag=Список покупок">Список покупок</a></li>
+        <li>Все</li>
+        <li>Идеи</li>
+        <li>Личное</li>
+        <li>Работа</li>
+        <li>Список покупок</li>
       </ul>
     </div>
 
     <div class="right-block">
       <div class="search-block">
-        <form action="/" method="GET">
-          <input type="text" name="search" class="search" placeholder="Поиск" value="{{search}}" />
-          <input type="hidden" name="tag" value="{{tag}}" />
-        </form>
+        <input type="text" name="text" class="search" placeholder="Поиск" />
       </div>
       <div class="notes-list">
-        {{notes}}
+        <!-- Заметки будут загружаться динамически -->
+      </div>
+      <!-- Блок для детального просмотра/редактирования заметки -->
+      <div class="note-detail">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 class="detail-title"></h2>
+          <button class="back-btn">Назад</button>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 5px; font-weight: bold;">Дата: </label>
+          <input type="date" class="detail-date">
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 5px; font-weight: bold;">Тег: </label>
+          <input type="text" class="detail-section" readonly>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 5px; font-weight: bold;">Содержимое:</label>
+          <textarea class="detail-content"></textarea>
+        </div>
+        <div class="detail-buttons">
+          <button class="save-detail-btn">Сохранить</button>
+          <button class="delete-detail-btn">Удалить</button>
+          <button class="cancel-detail-btn">Отмена</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

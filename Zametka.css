@@ -1,0 +1,231 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+  height: 100vh;
+}
+.outer-block {
+  width: 1000px;
+  height: 90vh;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+}
+.left-block {
+  text-align: center;
+  width: 370px;
+  height: 90vh;
+  background-color: #F0F0F0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-top: 16px;
+  padding-left: 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-size: 18px;
+  position: relative;
+}
+.newmark {
+  background-color: #4499FF;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 16px 72px 16px 72px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.tegs {
+  font-size: 24px;
+  color: #74777B;
+  position: absolute;
+  padding-left: 30px;
+  padding-top: 50px;
+}
+.tags-list {
+  padding-left: 50px;
+  margin-top: 100px;
+  color: black;
+  font-size: 21px;
+  list-style: none;
+  text-align: left;
+}
+.tags-list li {
+  padding: 15px;
+}
+.tags-list li:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+  border-radius: 15px;
+  width: 250px;
+}
+.search {
+  width: 500px;
+  height: 40px;
+  color: #FCFCFC;
+  padding-left: 10px;
+  border-radius: 10px;
+  background-color: #F4F4F4;
+  border: none;
+  margin: 36px 0px 0px 36px;
+}
+input::placeholder {
+  color: #74777B;
+}
+input, select, textarea {
+  color: black;
+}
+textarea:focus, input:focus {
+  color: black;
+}
+.search-block {
+  display: flex;
+  align-items: center;
+  margin: 36px 0 0 36px;
+}
+.notes-list {
+  width: 565px;
+  margin: 56px 0 0 36px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 14px;
+  box-sizing: border-box;
+}
+.note {
+  position: relative;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+.note:last-child {
+  margin-bottom: 0;
+}
+.note-title {
+  font-weight: 600;
+  font-size: 24px;
+  color: #333;
+}
+.note-date, .note-section {
+  font-size: 18px;
+  color: #666;
+  margin-top: 8px;
+}
+.note-section {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #F0F0F0;
+  color: black;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.note:hover {
+  background-color: #4499FF;
+}
+.note:hover .note-title {
+  color: #FFFFFF;
+}
+.note:hover .note-date {
+  color: #E0E0E0;
+}
+.note:hover .note-section {
+  color: black;
+  background-color: white;
+}
+/* Дополнительные стили для правой части */
+.right-block {
+  flex: 1;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+}
+.note-detail {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 36px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.note-detail > div {
+  width: 100%;
+}
+.detail-title {
+  margin: 0;
+  flex: 1;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+.detail-date, .detail-section {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.detail-section {
+  background-color: #F0F0F0;
+  color: black;
+}
+.detail-content {
+  width: 100%;
+  min-height: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.detail-buttons {
+  text-align: right;
+  margin-top: 20px;
+  width: 100%;
+}
+.detail-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.back-btn, .cancel-detail-btn, .delete-detail-btn {
+  background-color: #ccc;
+  color: #333;
+}
+.save-detail-btn {
+  background-color: #4499FF;
+  color: #fff;
+}
+.search-block, .notes-list {
+  position: relative;
+  z-index: 1;
+}
